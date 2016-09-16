@@ -12,23 +12,25 @@ filepdf=$1
 rango=$(($2-1))
 numeropaginas=$(pdftk $filepdf dump_data | grep NumberOfPages | cut -c16-)
 folder=${filepdf/.pdf/""}
-#mkdir $folder
+mkdir $folder
 paginas=$((10#$numeropaginas))
+cd "$folder/"
 for ((i=1; i<=$paginas; i++))
 	do
 		limite=$(($i + $rango))
 		if (($limite > $paginas)); then
 			echo "PASO"
-			echo /$folder/$folder$i-_-$paginas.pdf
+			#echo /$folder/$folder$i-_-$paginas.pdf
+			pdftk "../$filepdf" cat $i-$paginas output "$folder$i-_-$paginas.pdf"
 			i=$(($i + $rango))
 		else
-			echo "else"
-			echo /$folder/$folder$i-_-$limite.pdf
+			#echo $i-$limite
+			pdftk "../$filepdf" cat $i-$limite output "$folder$i-_-$limite.pdf"
+			#echo /$folder/$folder$i-_-$limite.pdf
 			i=$(($i + $rango))
 		fi
 
 			
 
 
-		#pdftk $filepdf cat $i+'-'+($i+$rango) output /$folder/$filepdf+$i
 	done
