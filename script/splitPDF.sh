@@ -19,14 +19,13 @@ for ((i=1; i<=$paginas; i++))
 	do
 		limite=$(($i + $rango))
 		if (($limite > $paginas)); then
-			echo "PASO"
-			#echo /$folder/$folder$i-_-$paginas.pdf
-			pdftk "../$filepdf" cat $i-$paginas output "$folder$i-_-$paginas.pdf"
+			echo "Last One"
+			pdftk "$filepdf" cat $i-$paginas output "$folder$i-_-$paginas.pdf"
+			mv "$folder$i-_-$paginas.pdf" "$folder"
 			i=$(($i + $rango))
 		else
-			#echo $i-$limite
-			pdftk "../$filepdf" cat $i-$limite output "$folder$i-_-$limite.pdf"
-			#echo /$folder/$folder$i-_-$limite.pdf
+			pdftk "$filepdf" cat $i-$limite output "$folder$i-_-$limite.pdf"
+			mv "$folder$i-_-$limite.pdf" "$folder"
 			i=$(($i + $rango))
 		fi
 
